@@ -1,0 +1,28 @@
+body{
+    background: #141E30;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+
+.titulo{
+    font-size: 3.5em;
+    margin-top: 1.5em;
+    text-align: center;
+}
+.subtitulo{
+    font-size: 2.0em;
+    text-align: center;
+    margin-bottom: 2em;
+
+}
+
+.Cards_Content{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20em, 25em));
+    justify-content: center;
+
+}

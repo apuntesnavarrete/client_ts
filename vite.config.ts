@@ -6,6 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:3007/",
+      "/api/campeones": "http://localhost:3007/",
+
     },
   },
   plugins: [react()],
