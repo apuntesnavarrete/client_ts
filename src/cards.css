@@ -26,3 +26,19 @@ body{
     justify-content: center;
 
 }
+
+.Card-btn{
+    color: #eceeee;
+  text-decoration: none;
+  background-color: #568431;
+
+  padding: 7px 10px;
+
+  border-radius: 5px;
+}
+
+.Card-btn:hover{
+    border: 1px solid #568431;
+    background-color:#152032;
+
+}

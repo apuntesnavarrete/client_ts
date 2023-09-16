@@ -1,0 +1,1 @@
+modularizar en carpetas componentes y estilos

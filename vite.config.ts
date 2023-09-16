@@ -7,6 +7,8 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:3007/",
       "/api/campeones": "http://localhost:3007/",
+      "/api/campeones/66": "http://localhost:3007/",
+      
 
     },
   },

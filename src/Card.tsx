@@ -1,4 +1,7 @@
 
+import { Link } from 'react-router-dom';
+
+
 import './card.css';
 
 
@@ -70,6 +73,14 @@ const Card: React.FC<CardProps> = ({ campeonato }) => {
         <div>
           <p className='Card-Bottom_campeones'>Campeones</p>
           <p className='Card-Bottom_liga'>Liga {liga}</p>
+
+        </div>
+        <div>
+
+        <Link className='Card-btn' to={`/campeones/${id_campeonato}`}>Ver mas..</Link>
+
+       
+
         </div>
       </div>
     </div>
