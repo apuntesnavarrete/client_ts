@@ -22,7 +22,8 @@ interface jornadas {
     idlc: number;
   }
 
-  
+  type Ocurrencias = Record<string, number>;
+
 
 function Roll() {
 
@@ -82,6 +83,28 @@ const deleteEquipo = (equipo : string) =>{
     console.log(newEquipos)
 }
 
+const verVersus = (equipo : string) =>{
+    console.log("logica de prueba")
+    console.log(jornadasData)
+    console.log(equipos[0])
+    const objetosFiltrados = jornadasData.filter(objeto => objeto.Equipolc === equipo);
+    const equiposFiltrados = objetosFiltrados.map(objeto => objeto.Nombre_Equipo);
+    const ocurrencias: Ocurrencias = {};
+
+    equiposFiltrados.filter(equipo => {
+        if (!ocurrencias[equipo]) {
+          ocurrencias[equipo] = 1;
+          return true;
+        }
+        ocurrencias[equipo]++;
+        return false;
+      });
+
+      console.log('Equipo a Evaluar:', equipos[6]);
+
+      console.log('Conteo de ocurrencias:', ocurrencias);
+}
+
   return (
     <div>
      <div>
@@ -95,6 +118,13 @@ const deleteEquipo = (equipo : string) =>{
 
     </div>
  
+    <div>
+        <p>Prueba Equipos</p>
+        {equipos.map((equipo, index) => (
+            <button onClick={()=>verVersus(equipo)} key={index}>{equipo}</button>
+          ))}
+    </div>
+
     </div>
   )
 }
