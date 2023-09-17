@@ -1,6 +1,6 @@
 import  {useEffect, useState} from 'react'
-import Card from '../Card';
-import '../cards.css';
+import Card from '../../components/Card/Card';
+import './campeones.css';
 
 interface CampeonatoData {
   id_campeonato: number;

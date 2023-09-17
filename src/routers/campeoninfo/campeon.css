@@ -1,0 +1,39 @@
+.img-jugador{
+    width: 50px;
+}
+
+h3{
+    font-size: 18px;
+    text-align: center;
+}
+
+.content-campeones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-campeones-data{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 90%;
+   margin-bottom: 20px;
+    padding: 30px;
+    justify-content: center;
+}
+
+.content-jugador{
+    border: 1px solid snow;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+.content-jugador p {
+    margin-top: 5px;
+}

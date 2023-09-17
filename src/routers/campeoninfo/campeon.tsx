@@ -1,5 +1,7 @@
 import  {useEffect, useState} from 'react'
-import '../cards.css';
+import '../Campeones/campeones.css';
+import './campeon.css';
+
 import { useParams } from 'react-router-dom';
 
 interface CampeonatoDataPlayers {
@@ -26,25 +28,27 @@ interface CampeonatoDataPlayers {
 
 
 interface mejoresDataPlayers {
-  Apellido_Materno: string;
-  Apellido_Paterno: string;
-  Categoria: string;
-  Curp: string;
-  Delegado: string | null;
-  Escudo: string;
-  Fecha_Nacimiento: string;
-  Fecha_Registro: string | null;
-  Foto: string;
-  ID_FB: number;
-  Id_campeonato: number;
-  Liga: string;
-  Nombre_Equipo: string;
-  Nombres: string;
-  Torneo: string;
-  id_Equipo: number;
-  id_jugador: number;
-  id_plantel: number;
   id_registro: number;
+  id_Equipo: number;
+  Torneo: string;
+  Categoria: string;
+  Liga: string;
+  id_jugador: number;
+  Id_campeonato: number;
+  Posicion: string;
+  Podio: string;
+  ID_FB: number;
+  Nombres: string;
+  Apellido_Paterno?: string;
+  Apellido_Materno?: string;
+  Fecha_Nacimiento?: string;
+  Curp?: string;
+  Foto?: string;
+  id_plantel: number;
+  Nombre_Equipo: string;
+  Delegado?: string;
+  Escudo?: string;
+  Fecha_Registro?: string;
 }
 
 
@@ -94,52 +98,54 @@ function Campeon() {
       <a href='https://www.facebook.com/Impactounder'>Promocion de Uniformes clon da click y CONTACTANOS </a>
     </div>
     <h2 className='titulo'>Historial de Campeones</h2>
-    <h2 className='subtitulo'>"Los Heroes Tecamac"</h2>
-    <p>Jugadores campeones </p>
+    <p className='subtitulo'>"Los Heroes Tecamac"</p>
 
     </header>
 
 
-    <div className='Cards_Content'>
-   
+    <section className='content-campeones'>
+   <h3>Jugadores Campeones</h3>
 
+      <div className='content-campeones-data'>
 
       {campeonesData.map((campeonato, index) => (
-       <div key={index}>
+       <div className='content-jugador' key={index}>
 
-        <img className='Card-center_img' src={`${url_jugador + campeonato.Foto}`} alt="" />
-
-      <p>{campeonato.Foto}</p>  
-      <p>{campeonato.Nombres}</p>  
+        <img className='img-jugador' src={`${url_jugador + campeonato.Foto}`} alt="" />
+        <p>{campeonato.Nombres}</p>  
 
        
        </div>
       
 
       ))}
+      </div>
+    
      
-    </div>
+    </section >
+
+        <section  className='content-campeones'>
+        <h3>Mejores Jugadores</h3>
+        <div className='content-campeones-data'>
 
 
-    <div className='Cards_Content'>
-   
+        {equipos.map((campeonato, index) => (
+            <div className='content-jugador' key={index}>
 
-<p>Mejores Jugadores</p>
-   {equipos.map((campeonato, index) => (
-    <div key={index}>
-
-     <img className='Card-center_img' src={`${url_jugador + campeonato.Foto}`} alt="" />
-
-   <p>{campeonato.Foto}</p>  
-   <p>{campeonato.Nombres}</p>  
+          <p>{campeonato.Podio} Mejor {campeonato.Posicion}</p>  
+            <img className='img-jugador' src={`${url_jugador + campeonato.Foto}`} alt="" />
+          <p>{campeonato.Nombres}</p>  
 
     
     </div>
    
 
    ))}
-  
- </div>
+
+          </div>
+
+        </section> 
+        
 
     </>
   )
