@@ -24,12 +24,28 @@ interface jornadas {
 
   type Ocurrencias = Record<string, number>;
 
+ 
+
+  interface Equipos {
+    nombres: string[];
+    encuentros: {
+      [equipo: string]: {
+        vs: {
+          [equipoOponente: string]: {
+            veces: number;
+            ultimaFecha: string;
+          };
+        };
+      };
+    };
+  }
 
 function Roll() {
 
 
     const [jornadasData, setjornadasData] = useState<jornadas[]>([]);
     const [equipos, setequipos] = useState<string[]>([]);
+    const [EnfrentamientosEquipos, setEnfrentamientosEquipos] = useState<Equipos | null>(null);
 
 
 
@@ -88,7 +104,20 @@ const verVersus = (equipo : string) =>{
     console.log(jornadasData)
     console.log(equipos[0])
     const objetosFiltrados = jornadasData.filter(objeto => objeto.Equipolc === equipo);
-    const equiposFiltrados = objetosFiltrados.map(objeto => objeto.Nombre_Equipo);
+
+
+    const equiposFiltrados : string[] = objetosFiltrados.map(objeto => objeto.Nombre_Equipo);
+
+    const fechasFiltradas = objetosFiltrados.map(objeto => objeto.Fecha);
+
+    console.log(fechasFiltradas)
+
+    const fechaMasReciente = fechasFiltradas.reduce((fechaMaxima, fechaActual) => {
+        return fechaActual > fechaMaxima ? fechaActual : fechaMaxima;
+      }, '');
+      
+      console.log('Fecha más reciente:', fechaMasReciente)
+
     const ocurrencias: Ocurrencias = {};
 
     equiposFiltrados.filter(equipo => {
@@ -100,10 +129,69 @@ const verVersus = (equipo : string) =>{
         return false;
       });
 
-      console.log('Equipo a Evaluar:', equipos[6]);
+
+
+
 
       console.log('Conteo de ocurrencias:', ocurrencias);
 }
+
+const prueba = () => {
+  const enfrentamientosEquipos: Equipos = {
+    nombres: equipos,
+    encuentros: {},
+  };
+
+  // Inicializar los encuentros para cada equipo
+  equipos.forEach((equipo) => {
+    enfrentamientosEquipos.encuentros[equipo] = {
+      vs: {},
+    };
+  });
+
+  // Actualizar los encuentros
+  jornadasData.forEach((enfrentamiento) => {
+    const equipoLocal: string = enfrentamiento.Equipolc;
+    const equipoVisitante: string = enfrentamiento.Nombre_Equipo;
+    const fecha: string = enfrentamiento.Fecha;
+
+    // Verificar si el equipoLocal y equipoVisitante existen en el objeto
+    if (!enfrentamientosEquipos.encuentros[equipoLocal]) {
+      enfrentamientosEquipos.encuentros[equipoLocal] = {
+        vs: {},
+      };
+    }
+    if (!enfrentamientosEquipos.encuentros[equipoLocal].vs[equipoVisitante]) {
+      enfrentamientosEquipos.encuentros[equipoLocal].vs[equipoVisitante] = {
+        veces: 0,
+        ultimaFecha: '',
+      };
+    }
+
+    enfrentamientosEquipos.encuentros[equipoLocal].vs[equipoVisitante].veces++;
+    enfrentamientosEquipos.encuentros[equipoLocal].vs[equipoVisitante].ultimaFecha = fecha;
+
+    // Actualizar el equipo visitante, asegurándose de manejar la posible inexistencia de la combinación previamente
+    if (!enfrentamientosEquipos.encuentros[equipoVisitante]) {
+      enfrentamientosEquipos.encuentros[equipoVisitante] = {
+        vs: {},
+      };
+    }
+
+    if (!enfrentamientosEquipos.encuentros[equipoVisitante].vs[equipoLocal]) {
+      enfrentamientosEquipos.encuentros[equipoVisitante].vs[equipoLocal] = {
+        veces: 0,
+        ultimaFecha: '',
+      };
+    }
+
+    enfrentamientosEquipos.encuentros[equipoVisitante].vs[equipoLocal].veces++;
+    enfrentamientosEquipos.encuentros[equipoVisitante].vs[equipoLocal].ultimaFecha = fecha;
+  });
+
+  console.log(enfrentamientosEquipos);
+};
+
 
   return (
     <div>
@@ -125,7 +213,18 @@ const verVersus = (equipo : string) =>{
           ))}
     </div>
 
+          <button onClick={prueba}>Prueba</button>
+    
+    
+    <div>
+
+
+
     </div>
+    </div>
+
+
+    
   )
 }
 
