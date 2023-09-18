@@ -25,13 +25,12 @@ interface jornadas {
   type Ocurrencias = Record<string, number>;
 
  
-
-  interface Equipos {
-    nombres: string[];
+  interface EnfrentamientosEquipos {
+    nombres: string[]; // Supongo que 'equipos' es un arreglo de cadenas
     encuentros: {
       [equipo: string]: {
         vs: {
-          [equipoOponente: string]: {
+          [equipo: string]: {
             veces: number;
             ultimaFecha: string;
           };
@@ -45,7 +44,7 @@ function Roll() {
 
     const [jornadasData, setjornadasData] = useState<jornadas[]>([]);
     const [equipos, setequipos] = useState<string[]>([]);
-    const [EnfrentamientosEquipos, setEnfrentamientosEquipos] = useState<Equipos | null>(null);
+    const [EnfrentamientosEquipos, setEnfrentamientosEquipos] = useState<EnfrentamientosEquipos | null>(null);
 
 
 
@@ -137,11 +136,10 @@ const verVersus = (equipo : string) =>{
 }
 
 const prueba = () => {
-  const enfrentamientosEquipos: Equipos = {
+  const enfrentamientosEquipos: EnfrentamientosEquipos = {
     nombres: equipos,
     encuentros: {},
   };
-
   // Inicializar los encuentros para cada equipo
   equipos.forEach((equipo) => {
     enfrentamientosEquipos.encuentros[equipo] = {
@@ -189,6 +187,7 @@ const prueba = () => {
     enfrentamientosEquipos.encuentros[equipoVisitante].vs[equipoLocal].ultimaFecha = fecha;
   });
 
+  setEnfrentamientosEquipos(enfrentamientosEquipos)
   console.log(enfrentamientosEquipos);
 };
 
@@ -217,8 +216,40 @@ const prueba = () => {
     
     
     <div>
-
-
+    <div>
+  {/* Aquí empieza la renderización de EnfrentamientosEquipos */}
+  {EnfrentamientosEquipos && (
+    <table>
+      <thead>
+        <tr>
+          <th>Equipo</th>
+          <th>Enfrentamientos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {equipos.map((equipo, index) => (
+          <tr key={index}>
+            <td>{equipo}</td>
+            <td>
+              <ul>
+                {equipos.map((oponente, oponenteIndex) => (
+                  <li key={oponenteIndex}>
+                    {`${oponente}: ${
+                      EnfrentamientosEquipos.encuentros[equipo]?.vs[oponente]?.veces || 0
+                    } veces (Última fecha: ${
+                      EnfrentamientosEquipos.encuentros[equipo]?.vs[oponente]?.ultimaFecha || 'N/A'
+                    })`}
+                  </li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+  {/* Fin de la renderización de EnfrentamientosEquipos */}
+</div>
 
     </div>
     </div>
