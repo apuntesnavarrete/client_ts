@@ -1,4 +1,5 @@
-import { useEffect , useState } from "react";
+import { useEffect , useState,   } from "react";
+import { useParams } from 'react-router-dom';
 
 
 interface jornadas {
@@ -48,9 +49,12 @@ function Roll() {
 
 
 
+    const { categoria } = useParams();
+
+    console.log(categoria)
     useEffect(() => {
       // Realizar la petición GET a la API cuando el componente se monta
-      fetch('api/jornadas/ed/sub23')
+      fetch(`api/jornadas/ed/sub23`)
         .then(response => response.json())
         .then(data => {
           console.log('Data from API:', data); // Imprimir la data en la consola
@@ -192,6 +196,9 @@ const prueba = () => {
 };
 
 
+
+
+
   return (
     <div>
      <div>
@@ -217,41 +224,47 @@ const prueba = () => {
     
     <div>
     <div>
-  {/* Aquí empieza la renderización de EnfrentamientosEquipos */}
+  <h2>Enfrentamientos entre Equipos</h2>
   {EnfrentamientosEquipos && (
     <table>
       <thead>
         <tr>
-          <th>Equipo</th>
-          <th>Enfrentamientos</th>
+          <th>Equipo Local</th>
+          <th>Equipo Visitante</th>
+          <th>Veces Enfrentados</th>
+          <th>Última Fecha</th>
         </tr>
       </thead>
       <tbody>
-        {equipos.map((equipo, index) => (
-          <tr key={index}>
-            <td>{equipo}</td>
-            <td>
-              <ul>
-                {equipos.map((oponente, oponenteIndex) => (
-                  <li key={oponenteIndex}>
-                    {`${oponente}: ${
-                      EnfrentamientosEquipos.encuentros[equipo]?.vs[oponente]?.veces || 0
-                    } veces (Última fecha: ${
-                      EnfrentamientosEquipos.encuentros[equipo]?.vs[oponente]?.ultimaFecha || 'N/A'
-                    })`}
-                  </li>
-                ))}
-              </ul>
-            </td>
-          </tr>
+        {equipos.map((equipoLocal, indexLocal) => (
+          equipos.map((equipoVisitante, indexVisitante) => (
+            indexLocal !== indexVisitante && ( // Evita comparar un equipo consigo mismo
+              <tr key={`${indexLocal}-${indexVisitante}`}>
+                <td>{equipoLocal}</td>
+                <td>{equipoVisitante}</td>
+                <td>
+                  {EnfrentamientosEquipos.encuentros[equipoLocal]?.vs[equipoVisitante]?.veces/2 || 0}
+                </td>
+                <td>
+                  {EnfrentamientosEquipos.encuentros[equipoLocal]?.vs[equipoVisitante]?.ultimaFecha || 'N/A'}
+                </td>
+              </tr>
+            )
+          ))
         ))}
       </tbody>
     </table>
   )}
-  {/* Fin de la renderización de EnfrentamientosEquipos */}
 </div>
 
+
     </div>
+
+    <div>
+      <h1>Planificación de Jornada</h1>
+     
+    </div>
+
     </div>
 
 

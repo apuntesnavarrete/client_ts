@@ -9,6 +9,8 @@ export default defineConfig({
       "/api/campeones": "http://localhost:3007/",
       "/api/campeones/jugadores/66": "http://localhost:3007/",
       "/api/campeones/mejores_jugadores/66": "http://localhost:3007/",
+      "/api/jornadas/ed/sub23": "http://localhost:3007/",
+      "/api/jornadas/ed/sub23/3": "http://localhost:3007/"
 
 
     },

@@ -1,1 +1,4 @@
 modularizar en carpetas componentes y estilos
+
+hacer dinamico con un array.
+ y tratar del que el array venga desde una base de datos,

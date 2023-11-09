@@ -3,6 +3,7 @@ import Campeones from "../routers/Campeones/Campeones";
 import Home from "../routers/Home/Home";
 import Campeon from "../routers/campeoninfo/campeon";
 import Roll from "../routers/Roll/roll";
+import Rolldinamic from "../routers/Roll/rolldinamic";
 
 
 const routerdata = [
@@ -10,6 +11,7 @@ const routerdata = [
     {path: "/Campeones", element: <Campeones></Campeones>} ,
     {path: "/Campeones/:id", element:<Campeon></Campeon> } ,
     {path: "/Roll", element:<Roll></Roll> } ,
+    {path: "/Roll/:id", element:<Rolldinamic></Rolldinamic> } ,
 
 
 
