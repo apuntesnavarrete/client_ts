@@ -3,6 +3,7 @@ import '../Campeones/campeones.css';
 import './campeon.css';
 
 import { useParams } from 'react-router-dom';
+import { url_jugador_img } from '../../var_global/direciones';
 
 interface CampeonatoDataPlayers {
   Apellido_Materno: string;
@@ -85,7 +86,6 @@ function Campeon() {
   }, []);
 
 //  let url_liga="http://18.188.110.39:82/ligas/"
-  let url_jugador="http://18.188.110.39:82/public/jug" 
 
  console.log(equipos)
 
@@ -111,7 +111,7 @@ function Campeon() {
       {campeonesData.map((campeonato, index) => (
        <div className='content-jugador' key={index}>
 
-        <img className='img-jugador' src={`${url_jugador + campeonato.Foto}`} alt="" />
+        <img className='img-jugador' src={`${url_jugador_img + campeonato.Foto}`} alt="" />
         <p>{campeonato.Nombres}</p>  
 
        
@@ -133,7 +133,7 @@ function Campeon() {
             <div className='content-jugador' key={index}>
 
           <p>{campeonato.Podio} Mejor {campeonato.Posicion}</p>  
-            <img className='img-jugador' src={`${url_jugador + campeonato.Foto}`} alt="" />
+            <img className='img-jugador' src={`${url_jugador_img + campeonato.Foto}`} alt="" />
           <p>{campeonato.Nombres}</p>  
 
     

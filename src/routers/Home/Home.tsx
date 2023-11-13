@@ -21,7 +21,9 @@ function Home() {
   <div className='conten-iten-nav'>
     <p> <Link to="/campeones">Campeones</Link></p>
       
-    <p>  <Link to="/roll">Simulador de Roll</Link></p>
+    <p>  <Link to="/roll/sub23">Simulador de Roll ed sub23</Link></p>
+    <p>  <Link to="/roll/mixta_sabatina">Simulador de Roll ed mixta sabatia</Link></p>
+    <p>  <Link to="/jugadores">Jugadores</Link></p>
 
   </div>
 </nav>
