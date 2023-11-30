@@ -1,0 +1,137 @@
+import { useForm } from "react-hook-form"
+import  { useEffect, useState} from 'react'
+import { url_jugador_img } from '../../var_global/direciones';
+import { jugador } from '../../functions/datatypes';
+
+function FormularioJugador() {
+
+  const [loading, setLoading] = useState(true);
+  const [jugadoresData, setjugadoresData] = useState<jugador[]>([]);
+  const [jugadoresDatatodos, setjugadoresDatatodos] = useState<jugador[]>([]);
+  const [busqueda, setBusqueda] = useState('');
+  const [IdNewRegister, setIdNewRegister] = useState(0);
+
+
+  useEffect(() => {
+    // Realizar la petición GET a la API cuando el componente se monta
+    fetch('/api/jugadores')
+      .then(response => response.json())
+      .then((data: jugador[]) => {
+
+        
+        const jugadoresOrdenados = data.sort((b, a) => a.ID_FB - b.ID_FB);
+        // Tomar solo los primeros 100 resultados
+        const primeros100Jugadores = jugadoresOrdenados.slice(0, 100);
+        setjugadoresData(primeros100Jugadores);
+        setjugadoresDatatodos(data)
+        setLoading(false); // Marcar como no cargando
+        const Idnew =  jugadoresOrdenados[0]["ID_FB"]
+        setIdNewRegister(Idnew + 1)
+        console.log()
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        (<p>La data fallo , si el errror persiste , manda un mns al whatsapp 5552108059;</p>)
+        setLoading(false); // Marcar como no cargando en caso de error
+
+      });
+
+     
+  }, []);
+
+
+
+  type FormValues={
+    username: string
+  }
+
+const form = useForm<FormValues>();
+ const { register , handleSubmit} = form
+ 
+ const onSubmit = (data : FormValues) =>{
+  console.log(data.username)
+
+
+  fetch('http://localhost:3007/api/admin/Jugadores', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    Id:IdNewRegister,
+    Nombre: data.username,
+    Curp: 'example@example.com'
+  })
+}).then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
+
+  }
+
+  const handleBusquedaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valorBusqueda = e.target.value;
+    setBusqueda(valorBusqueda);
+    // Filtrar los datos basándonos en la búsqueda
+   const datosFiltrados = jugadoresDatatodos.filter((jugador) =>
+   jugador.Nombres.toLowerCase().includes(valorBusqueda.toLowerCase())
+    );
+    setjugadoresData(datosFiltrados)
+   
+
+
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" value={busqueda} id="username" {...register("username")} onChange={handleBusquedaChange}></input>
+        
+        <input type="submit" >
+
+        </input>
+
+      </form>
+
+      <h2>Lista de Jugadores</h2>
+
+{loading ? (
+  <p>cargando ...</p>
+) : (
+  <>
+  <p>El nuevo registro contara con el id {IdNewRegister}</p>
+  <table>
+  <thead>
+    <tr>
+      <th>ID_FB</th>
+      <th>Nombres</th>
+
+      <th>Fecha de Nacimiento</th>
+      <th>CURP</th>
+      <th>Foto</th>
+    </tr>
+  </thead>
+  <tbody>
+    {jugadoresData.map(jugador => (
+      <tr key={jugador.ID_FB}>
+        <td>{jugador.ID_FB}</td>
+        <td>{jugador.Nombres}</td>
+        <td>{jugador.Fecha_Nacimiento}</td>
+        <td>{jugador.Curp}</td>
+        <td>
+        <img className='img-jugador' src={`${url_jugador_img + jugador.Foto}`} alt={`Foto de ${jugador.Nombres}`} />
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+</>
+)}
+
+    </div>
+  )
+}
+
+export default FormularioJugador
+
+

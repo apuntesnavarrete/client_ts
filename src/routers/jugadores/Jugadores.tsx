@@ -1,15 +1,8 @@
 import  { useEffect, useState} from 'react'
 import { url_jugador_img } from '../../var_global/direciones';
+import { jugador } from '../../functions/datatypes';
 
-interface jugador {
-    ID_FB: number;
-    Nombres: string;
-    Apellido_Paterno: string;
-    Apellido_Materno: string;
-    Fecha_Nacimiento: string;
-    Curp: string;
-    Foto: string;
-  }
+
 
 function Jugadores() {
      const [loading, setLoading] = useState(true);
